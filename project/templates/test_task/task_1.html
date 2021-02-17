@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div id='app'>
+  <div class="container-fluid fixed-top header">
+    <div id='header-meny' class="row">
+      <div class='col-12 '>
+        <h1 align='center'>Header</h1>
+      </div>
+    </div>
+  </div>
+  <div id='content' class="container content">
+    <div class="row">
+      <div class='col-2 left_meny position-fixed'>
+        <h1 align='center'>1</h1>
+        <h1 align='center'>2</h1>
+        <h1 align='center'>3</h1>
+        <h1 align='center'>4</h1>
+      </div>
+      <div class='col content'>
+        <h1 align='center'>1</h1>
+        <h1 align='center'>2</h1>
+        <h1 align='center'>3</h1>
+        <h1 align='center'>4</h1>
+        <h1 align='center'>5</h1>
+        <h1 align='center'>6</h1>
+        <h1 align='center'>7</h1>
+        <h1 align='center'>8</h1>
+        <h1 align='center'>9</h1>
+        <h1 align='center'>10</h1>
+        <h1 align='center'>11</h1>
+        <h1 align='center'>12</h1>
+        <h1 align='center'>13</h1>
+        <h1 align='center'>14</h1>
+        <h1 align='center'>15</h1>
+        <h1 align='center'>16</h1>
+        <h1 align='center'>17</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid fixed-bottom ">
+    <div id='bottom-meny' class="row">
+      <div class='col-12 footer'>
+        <h1 align='center'>Footer</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //Выравнивание отступов у контента
+  var headerMenyHeight = $("#header-meny").height()
+  var bottomMenyHeight = $("#bottom-meny").height()
+  $("#content").css({ 'padding-top': headerMenyHeight, 'padding-bottom': bottomMenyHeight })
+</script>
+<style>
+  .content {
+    background: yellow;
+  }
+
+  .left_meny {
+    background: Red;
+  }
+
+  .header {
+    color: #f1f1f1;
+    background: Grey;
+    width: 100%
+  }
+
+  .footer {
+    color: #f1f1f1;
+    background: Grey;
+    width: 100%;
+  }
+</style>
+{% endblock content %}

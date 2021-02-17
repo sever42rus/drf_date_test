@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div id='app'>
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div row class='col-10'>
+        <form v-on:submit.prevent="submit">
+
+          <div class="mb-4">
+            <p class="text-danger"> {[ errorCommon ]} </p>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Год</label>
+              <div class="col-4">
+                <input id="year" type="number" min="1900" max="2099" step="1" class="form-control"
+                  v-model.trim="year" />
+              </div>
+              <label class="col-sm-6 col-form-label text-danger">{[ errorYear ]}</label>
+            </div>
+            <label class="">Больше текущего года</label>
+            <input id="checkbox" type="checkbox" class="form-check-input" v-model.trim="checkbox" />
+          </div>
+          <button id='btnsubmit' class="btn btn-primary" type="submit"> Submit </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var app = new Vue({
+    el: '#app',
+    delimiters: ["{[", "]}"],
+    name: 'login',
+    data: () => ({
+      year: 2018,
+      checkbox: false,
+      errorCommon: '',
+      errorYear: '',
+    }),
+    methods: {
+      async submit() {
+        this.errorCommon = ''
+        this.errorYear = ''
+        form_data = JSON.stringify({
+          year: this.year,
+          checkbox: this.checkbox,
+        })
+        $("#btnsubmit").attr("disabled", true);
+        $.ajax({
+          contentType: "application/json",
+          type: "POST",
+          context: this,
+          headers: { "X-CSRFToken": '{{ csrf_token }}' },
+          url: "{% url 'form_api' %}",
+          data: form_data,
+          success: function (data) {
+            this.error = ''
+            this.year = 2018
+            this.checkbox = false
+            alert('Успех')
+          },
+          error: function (error) {
+            error = JSON.parse(error.responseText)
+            for (var i in error) {
+              val = error[i]
+              if (i == 'year')
+                this.errorYear = val[0]
+              if (i == 'common')
+                this.errorCommon = val[0]
+
+            }
+          },
+          complete: function () {
+            $("#btnsubmit").attr("disabled", false);
+          },
+        });
+      },
+    },
+  });
+</script>
+{% endblock content %}
